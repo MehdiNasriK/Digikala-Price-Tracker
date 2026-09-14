@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            My App
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="index.html" class="nav-item active" data-page="search">
+                <span class="nav-icon">⌕</span>
+                <span>Search</span>
+            </a>
+
+            <a href="mylist.html" class="nav-item" data-page="my-list">
+                <span class="nav-icon">♡</span>
+                <span>My List</span>
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="page">
+
+            <header class="page-header">
+                <h1>Search</h1>
+            </header>
+
+
+            <!-- Search -->
+            <section class="search-section">
+
+                <form class="search-box">
+
+                    <input
+                        type="search"
+                        name="search"
+                        placeholder="Search products..."
+                        aria-label="Search products"
+                    >
+
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- Products -->
+            <section class="products-section">
+
+                <div class="products-header">
+                    <h2>Search Results</h2>
+                    <span class="results-count">1000 products</span>
+                </div>
+
+
+                <div class="products-list">
+
+                    <article class="product-card">
+
+                        <img
+                            src="https://via.placeholder.com/80"
+                            alt="Apple AirPods Pro"
+                            class="product-image"
+                        >
+
+                        <div class="product-info">
+
+                            <h3 class="product-name">
+                                Apple AirPods Pro
+                            </h3>
+
+                            <div class="product-prices">
+
+                                <div class="price-row">
+                                    <span class="price-label">Price:</span>
+                                    <span class="old-price">$299.00</span>
+                                </div>
+
+                                <div class="price-row">
+                                    <span class="price-label">Discount Price:</span>
+                                    <span class="discount-price">$249.00</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-add">
+                            + Add to My List
+                        </button>
+
+                    </article>
+
+
+                    <article class="product-card">
+
+                        <img
+                            src="https://via.placeholder.com/80"
+                            alt="Sony WH-1000XM5"
+                            class="product-image"
+                        >
+
+                        <div class="product-info">
+
+                            <h3 class="product-name">
+                                Sony WH-1000XM5
+                            </h3>
+
+                            <div class="product-prices">
+
+                                <div class="price-row">
+                                    <span class="price-label">Price:</span>
+                                    <span class="old-price">$399.00</span>
+                                </div>
+
+                                <div class="price-row">
+                                    <span class="price-label">Discount Price:</span>
+                                    <span class="discount-price">$329.00</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-add">
+                            + Add to My List
+                        </button>
+
+                    </article>
+
+
+                    <article class="product-card">
+
+                        <img
+                            src="https://via.placeholder.com/80"
+                            alt="Samsung Galaxy Buds 3"
+                            class="product-image"
+                        >
+
+                        <div class="product-info">
+
+                            <h3 class="product-name">
+                                Samsung Galaxy Buds 3
+                            </h3>
+
+                            <div class="product-prices">
+
+                                <div class="price-row">
+                                    <span class="price-label">Price:</span>
+                                    <span class="old-price">$179.00</span>
+                                </div>
+
+                                <div class="price-row">
+                                    <span class="price-label">Discount Price:</span>
+                                    <span class="discount-price">$149.00</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-add">
+                            + Add to My List
+                        </button>
+
+                    </article>
+
+
+                    <article class="product-card">
+
+                        <img
+                            src="https://via.placeholder.com/80"
+                            alt="JBL Live Pro 2"
+                            class="product-image"
+                        >
+
+                        <div class="product-info">
+
+                            <h3 class="product-name">
+                                JBL Live Pro 2
+                            </h3>
+
+                            <div class="product-prices">
+
+                                <div class="price-row">
+                                    <span class="price-label">Price:</span>
+                                    <span class="old-price">$199.00</span>
+                                </div>
+
+                                <div class="price-row">
+                                    <span class="price-label">Discount Price:</span>
+                                    <span class="discount-price">$159.00</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <button class="btn btn-add">
+                            + Add to My List
+                        </button>
+
+                    </article>
+
+
+                    <!-- More products can continue here -->
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
