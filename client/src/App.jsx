@@ -6,23 +6,20 @@ import "./App.css";
 import Sidebar from "./component/Sidebar"
 import SearchSection from "./component/SearchSection";
 import Products from "./component/Products";
-import SearchPage from "./pages/search";
+import SearchPage from "./pages/SearchPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MyListPage from "./pages/MyListPage";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="app">
-      <Sidebar />
-      <main className="main-content">
-        <div className="page">
-          <header className="page-header">
-            <h1>Search</h1>
-          </header>
-
-          <SearchSection />
-          <Products />
-        </div>
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Home />}/>
+        <Route exact path="/search" element={<SearchPage />}/>
+        <Route exact path="/mylist" element={<MyListPage />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

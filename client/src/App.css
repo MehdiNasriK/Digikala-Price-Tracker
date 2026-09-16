@@ -108,12 +108,11 @@ button {
 
 .main-content {
     width: 100%;
-    margin-left: 220px;
 }
 
 .page {
     width: min(900px, calc(100% - 48px));
-    margin: 0 auto;
+    margin-left: 28%;
     padding: 48px 0;
 }
 
@@ -224,10 +223,6 @@ button {
     flex-direction: column;
     gap: 10px;
 
-    /*
-       ارتفاع لیست تقریباً اندازه
-       4 محصول است.
-    */
     height: 360px;
 
     overflow-y: auto;
@@ -398,6 +393,11 @@ button {
 .btn-add {
     background: #eef2ff;
     color: #4338ca;
+}
+
+.btn-added {
+    background: lightgreen;
+    color: green;
 }
 
 .btn-add:hover {

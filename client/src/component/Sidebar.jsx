@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function Sidebar() {
-  const [navState, setNavState] = useState("search");
+function Sidebar({ setProducts }) {
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    setNavState("search");
+    navigate("/search")
   };
 
-  const handleMyListClick = (e) => {
+  const handleMyListClick = async (e) => {
     e.preventDefault();
-    setNavState("my-list");
+    if (location.pathname === "/mylist") return
+    navigate("/mylist")
+
+    const response = await axios.get("http://localhost:3000/api/v1/mylist")
+    console.log(response.data.products)
+    setProducts(response.data.products)
   };
 
   return (
@@ -19,8 +26,8 @@ function Sidebar() {
 
       <nav className="sidebar-nav">
         <a
-          href="index.html"
-          className={`nav-item ${navState === "search" && "active"}`}
+          href=""
+          className={`nav-item ${location.pathname === "/search" && "active"}`}
           data-page="search"
           onClick={handleSearchClick}
         >
@@ -29,8 +36,8 @@ function Sidebar() {
         </a>
 
         <a
-          href="mylist.html"
-          className={`nav-item ${navState === "my-list" && "active"}`}
+          href=""
+          className={`nav-item ${location.pathname === "/mylist" && "active"}`}
           data-page="my-list"
           onClick={handleMyListClick}
         >
