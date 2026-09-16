@@ -5,6 +5,8 @@ CREATE TABLE "Product" (
     "name" TEXT NOT NULL,
     "price" INTEGER NOT NULL,
     "price_D" INTEGER NOT NULL,
+    "image" TEXT NOT NULL,
+    "inStock" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );

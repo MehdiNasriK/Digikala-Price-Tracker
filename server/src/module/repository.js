@@ -1,14 +1,19 @@
 import prisma from "../shared/prisma.js"
 import { AppError } from "../shared/error/erroeApp.js"
+import catchAsync from "../shared/catchAsync.js"
 
 const saveProductInList = async (data) => {
-    const product = await prisma.product.create({
+    try { 
+        const product = await prisma.product.create({
         data,
     })
 
     if (!product) throw new AppError("something went wrong", 500)
 
     return product
+}catch (err) {
+    console.log(err)
+}
 }
 
 const getProduct = async (DG_id) => {
@@ -46,9 +51,24 @@ const updateProducts = async(data) => {
     return products
 }
 
+const deleteProduct = async(DG_id) => {
+    try {
+        await prisma.product.delete({
+        where: {
+            DG_id,
+        }
+    })
+
+    return true
+}catch (err) {
+    console.log(err)
+}
+}
+
 export default {
     saveProductInList,
     findProducts,
     getProduct,
     updateProducts,
+    deleteProduct,
 }
