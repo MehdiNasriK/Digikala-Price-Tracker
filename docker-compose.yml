@@ -1,0 +1,38 @@
+services:
+  frontend:
+    build: ./client
+    ports:
+      - "8080:80"
+
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    env_file:
+      - /server/.env.example
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "npx prisma migrate deploy && node src/app.js"
+
+  postgres:
+    image: postgres:18.4
+    ports: 
+      - "5454:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "123456"
+      POSTGRES_DB: "mydb"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "mydb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+volumes:
+  postgres_data:
