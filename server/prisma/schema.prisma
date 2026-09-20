@@ -18,8 +18,8 @@ model Product {
 
   DG_id Int @unique
   name String
-  price Int
-  price_D Int
+  price BigInt
+  price_D BigInt
   image String
 
   inStock Boolean @default(true)

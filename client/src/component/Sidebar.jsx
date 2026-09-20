@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 
-function Sidebar({ setProducts }) {
+function Sidebar() {
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -10,14 +9,9 @@ function Sidebar({ setProducts }) {
     navigate("/search")
   };
 
-  const handleMyListClick = async (e) => {
+  const handleMyListClick = (e) => {
     e.preventDefault();
-    if (location.pathname === "/mylist") return
     navigate("/mylist")
-
-    const response = await axios.get("http://localhost:3000/api/v1/mylist")
-    console.log(response.data.products)
-    setProducts(response.data.products)
   };
 
   return (

@@ -1,11 +1,4 @@
-import { useState } from "react";
-import heroImg from "./assets/hero.png";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
 import "./App.css";
-import Sidebar from "./component/Sidebar"
-import SearchSection from "./component/SearchSection";
-import Products from "./component/Products";
 import SearchPage from "./pages/SearchPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyListPage from "./pages/MyListPage";

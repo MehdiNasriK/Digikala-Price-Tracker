@@ -9,29 +9,37 @@ function MyListPage() {
 
   useEffect(() => {
     const getMyList = async () => {
-      const response = await axios.get("http://localhost:3000/api/v1/mylist");
-      setMyList(response.data.products);
+      try {
+        const response = await axios.get("http://localhost:3000/api/v1/mylist");
+        setMyList(response.data.products);
+      } catch (err) {
+        alert(err.message)
+      }
     };
 
     getMyList();
   }, []);
 
   const refreshList = async () => {
-    if (refreshingState === "refreshing") return
-    setRefreshingState("refreshing");
-    setMyList([])
+    try {
+      if (refreshingState === "refreshing") return;
+      setRefreshingState("refreshing");
+      setMyList([]);
 
-    const response = await axios.get("http://localhost:3000/api/v1/refresh");
+      const response = await axios.get("http://localhost:3000/api/v1/refresh");
 
-    localStorage.setItem("last-update", Date.now());
-    const op = localStorage.getItem("last-update")
-    setMyList(response.data.products);
-    setRefreshingState("not-refresh");
+      localStorage.setItem("last-update", Date.now());
+      const op = localStorage.getItem("last-update");
+      setMyList(response.data.products);
+      setRefreshingState("not-refresh");
+    } catch (err) {
+      alert(err.message)
+    }
   };
 
   return (
     <div className="app">
-      <Sidebar setProducts={setMyList} />
+      <Sidebar />
       <main className="main-content">
         <div className="page">
           <header className="page-header my-list-header">

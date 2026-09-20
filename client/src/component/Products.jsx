@@ -12,7 +12,7 @@ function Products ({ products = []}) {
             </div>
 
             <div className="products-list">
-                { products.map(product => <ProductCard product={product}/>)}
+                { products.map(product => <ProductCard product={product} key={product.DG_id}/>)}
             </div>
         </section>
     )

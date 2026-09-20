@@ -1,6 +1,6 @@
 import repo from "./repository.js";
 import { AppError } from "../shared/error/erroeApp.js";
-import catchAsync from "../shared/catchAsync.js";
+import sleep from "../shared/sleep.js";
 
 const getProducts = async (searchInput) => {
   try {
@@ -20,8 +20,8 @@ const getProducts = async (searchInput) => {
         dataObject.price = mainArray[i].data.default_variant.price.rrp_price;
         dataObject.price_D =
           mainArray[i].data.default_variant.price.selling_price;
-        dataObject.image = mainArray[i].data.images.main.url[0]
-        dataObject.inStock = mainArray[i].data.status === "marketable"
+        dataObject.image = mainArray[i].data.images.main.url[0];
+        dataObject.inStock = mainArray[i].data.status === "marketable";
 
         data.push(dataObject);
       }
@@ -29,23 +29,38 @@ const getProducts = async (searchInput) => {
 
     return data;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
 const addTOMyList = async (productObj) => {
-  const product = await repo.getProduct(productObj.DG_id);
-  if (product)
-    throw new AppError("this product already exist in your list", 409);
+  try {
+    const product = await repo.getProduct(productObj.DG_id);
+    if (product)
+      throw new AppError("this product already exist in your list", 409);
 
-  return repo.saveProductInList(productObj);
+    return repo.saveProductInList(productObj);
+  } catch (err) {
+    throw err;
+  }
 };
 
-const getMyList = (next) => {
-  return repo.findProducts();
+const getMyList = async () => {
+  try {
+    const products = await repo.findProducts();
+
+    for (const product of products) {
+      product.price = product.price.toString()
+      product.price_D = product.price_D.toString()
+    }
+
+    return products
+  } catch (err) {
+    throw err;
+  }
 };
 
-const refreshMyList = catchAsync(async () => {
+const refreshMyList = async () => {
   try {
     const products = await repo.findProducts();
     if (products.length === 0) throw new AppError("your list is empty", 404);
@@ -53,7 +68,10 @@ const refreshMyList = catchAsync(async () => {
     const ids = products.map((product) => product.DG_id);
 
     const data = [];
+    const start = Date.now()
     for (const id of ids) {
+      await sleep(600);
+
       const response = await fetch(
         `https://api.digikala.com/v2/product/${id}/`,
       );
@@ -61,10 +79,11 @@ const refreshMyList = catchAsync(async () => {
 
       const DG_id = responseData.data.product.id;
       const name = responseData.data.product.title_fa;
-      const price = responseData.data.product.default_variant.price.rrp_price;
+      const price = responseData.data.product.default_variant.price?.rrp_price || 0;
       const price_D =
-        responseData.data.product.default_variant.price.selling_price;
+        responseData.data.product.default_variant.price?.selling_price || 0;
       const inStock = responseData.data.product.status === "marketable";
+      const image = responseData.data.product.images.main.url[0];
 
       const dataObject = {
         DG_id,
@@ -72,19 +91,33 @@ const refreshMyList = catchAsync(async () => {
         price,
         price_D,
         inStock,
+        image,
       };
 
       data.push(dataObject);
     }
+    const end = Date.now()
+    console.log(Math.trunc((end-start) / 1000))
 
-    return repo.updateProducts(data);
+    const newProducts = await repo.updateProducts(data);
+
+    for (const product of newProducts) {
+      product.price = product.price.toString()
+      product.price_D = product.price_D.toString()
+    }
+
+    return newProducts
   } catch (err) {
-    console.log(err);
+    throw err;
   }
-});
+};
 
 const deleteFromMyList = (DG_id) => {
-  return repo.deleteProduct(DG_id);
+  try {
+    return repo.deleteProduct(DG_id);
+  } catch (err) {
+    throw err;
+  }
 };
 
 export default {

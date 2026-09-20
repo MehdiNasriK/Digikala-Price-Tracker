@@ -7,22 +7,22 @@ function SearchSection({ setProducts }) {
   const handler = async (e) => {
     try {
       e.preventDefault();
-      if (searchInput === "") return
-      
-      setProducts([])
+      if (searchInput === "") return;
 
-      let inputValue = document.querySelector(".searchInput").value
+      setProducts([]);
+
+      let inputValue = document.querySelector(".searchInput").value;
 
       const response = await axios.post("http://localhost:3000/api/v1/search", {
         searchInput,
       });
 
-      setSearchInput("")
-      inputValue = ""
-    
-      setProducts(response.data.products)
+      setSearchInput("");
+      inputValue = "";
+
+      setProducts(response.data.products);
     } catch (err) {
-      console.log(err);
+      alert(err.message)
     }
   };
 
