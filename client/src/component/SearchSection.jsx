@@ -9,17 +9,12 @@ function SearchSection({ setProducts }) {
       e.preventDefault();
       if (searchInput === "") return;
 
-      setProducts([]);
-
-      let inputValue = document.querySelector(".searchInput").value;
-
       const response = await axios.post("http://localhost:3000/api/v1/search", {
         searchInput,
       });
 
       setSearchInput("");
-      inputValue = "";
-
+      setProducts([]);
       setProducts(response.data.products);
     } catch (err) {
       alert(err.message)

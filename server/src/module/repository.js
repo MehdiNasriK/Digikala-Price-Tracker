@@ -11,7 +11,7 @@ const saveProductInList = async (data) => {
 
     return product;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -32,8 +32,6 @@ const getProduct = async (DG_id) => {
 const findProducts = async () => {
   try {
     const products = await prisma.product.findMany();
-
-    if (!products) next(new AppError("there is no product", 404));
 
     return products;
   } catch (err) {

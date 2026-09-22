@@ -13,7 +13,7 @@ function MyListPage() {
         const response = await axios.get("http://localhost:3000/api/v1/mylist");
         setMyList(response.data.products);
       } catch (err) {
-        alert(err.message)
+        alert(err.message);
       }
     };
 
@@ -24,16 +24,18 @@ function MyListPage() {
     try {
       if (refreshingState === "refreshing") return;
       setRefreshingState("refreshing");
-      setMyList([]);
 
       const response = await axios.get("http://localhost:3000/api/v1/refresh");
 
+      setMyList([]);
+
       localStorage.setItem("last-update", Date.now());
-      const op = localStorage.getItem("last-update");
+
       setMyList(response.data.products);
-      setRefreshingState("not-refresh");
     } catch (err) {
-      alert(err.message)
+      alert(err.message);
+    } finally {
+      setRefreshingState("not-refresh");
     }
   };
 
@@ -48,27 +50,29 @@ function MyListPage() {
 
               <span className="last-update">
                 Last updated:{" "}
-                {new Date(
-                  Number(localStorage.getItem("last-update")),
-                ).toLocaleDateString("en-US", {
-                  timeZone: "Asia/Tehran",
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}{" "}
-                at{" "}
-                {new Date(
-                  Number(localStorage.getItem("last-update")),
-                ).toLocaleTimeString("en-US", {
-                  timeZone: "Asia/Tehran",
-                  minute: "2-digit",
-                  hour: "2-digit",
-                })}
+                {localStorage.getItem("last-update")
+                  ? `${new Date(
+                      Number(localStorage.getItem("last-update")),
+                    ).toLocaleDateString("en-US", {
+                      timeZone: "Asia/Tehran",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })} at ${new Date(
+                      Number(localStorage.getItem("last-update")),
+                    ).toLocaleTimeString("en-US", {
+                      timeZone: "Asia/Tehran",
+                      minute: "2-digit",
+                      hour: "2-digit",
+                    })}`
+                  : "no update yet"}
               </span>
             </div>
 
             <button className="btn btn-refresh" onClick={refreshList}>
-              {refreshingState === "not-refresh" ? "↻ Refresh" : "..."}
+              {refreshingState === "not-refresh"
+                ? "↻ Refresh"
+                : "Refreshing ..."}
             </button>
           </header>
 

@@ -7,6 +7,10 @@ const getProducts = async (searchInput) => {
     const response = await fetch(
       `https://api.digikala.com/discovery/api/v2/search?q=${searchInput}`,
     );
+
+    if (!response.ok) {
+      throw new AppError(`Digikala returned ${response.status}`, response.status);
+    }
     const responseData = await response.json();
     const mainArray = responseData.data.widgets[0].data.widgets;
 
@@ -50,11 +54,11 @@ const getMyList = async () => {
     const products = await repo.findProducts();
 
     for (const product of products) {
-      product.price = product.price.toString()
-      product.price_D = product.price_D.toString()
+      product.price = product.price.toString();
+      product.price_D = product.price_D.toString();
     }
 
-    return products
+    return products;
   } catch (err) {
     throw err;
   }
@@ -68,7 +72,7 @@ const refreshMyList = async () => {
     const ids = products.map((product) => product.DG_id);
 
     const data = [];
-    const start = Date.now()
+    const start = Date.now();
     for (const id of ids) {
       await sleep(600);
 
@@ -79,7 +83,8 @@ const refreshMyList = async () => {
 
       const DG_id = responseData.data.product.id;
       const name = responseData.data.product.title_fa;
-      const price = responseData.data.product.default_variant.price?.rrp_price || 0;
+      const price =
+        responseData.data.product.default_variant.price?.rrp_price || 0;
       const price_D =
         responseData.data.product.default_variant.price?.selling_price || 0;
       const inStock = responseData.data.product.status === "marketable";
@@ -96,17 +101,17 @@ const refreshMyList = async () => {
 
       data.push(dataObject);
     }
-    const end = Date.now()
-    console.log(Math.trunc((end-start) / 1000))
+    const end = Date.now();
+    console.log(Math.trunc((end - start) / 1000));
 
     const newProducts = await repo.updateProducts(data);
 
     for (const product of newProducts) {
-      product.price = product.price.toString()
-      product.price_D = product.price_D.toString()
+      product.price = product.price.toString();
+      product.price_D = product.price_D.toString();
     }
 
-    return newProducts
+    return newProducts;
   } catch (err) {
     throw err;
   }

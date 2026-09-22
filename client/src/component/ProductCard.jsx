@@ -8,9 +8,16 @@ function ProductCard({ product }) {
   const [addState, setAddState] = useState("+ Add to My List");
   const location = useLocation();
 
-  const handleAddFunction = async () => {
+  let isUpdating = false
+
+  const handleAddFunction = async (e) => {
     try {
+      e.preventDefault()
       if (addState === "added to your list") return;
+      
+      if (isUpdating) return
+      isUpdating = true
+
       const requestBody = {
         DG_id: product.DG_id,
         name: product.name,
@@ -26,18 +33,26 @@ function ProductCard({ product }) {
     } catch (err) {
       if (err.response?.status === 409) setAddState("added to your list");
       else alert(err.message)
+    } finally {
+      isUpdating = false
     }
   };
 
   const handleDeleteFunction = async (e) => {
     try {
       e.preventDefault();
+
+      if (isUpdating) return
+      isUpdating = true
+
       const response = await axios.delete(
         `http://localhost:3000/api/v1/delete/${product.DG_id}`,
       );
       window.location.reload();
     } catch (err) {
       alert(err.message);
+    } finally {
+      isUpdating = false
     }
   };
 
