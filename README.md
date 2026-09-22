@@ -98,16 +98,16 @@ This project started from a real-world problem:
 Manually checking hundreds of product prices every day is repetitive and inefficient.
 Instead of treating the task as a manual process, I built a small system around it.
 The project gave me practical experience with:
-Building a full-stack application
-REST API design
-React component architecture
-Express.js
-Prisma ORM
-PostgreSQL
-Docker
-API integration
-Error handling
-Separating business logic from database logic
+- Building a full-stack application
+- REST API design
+- React component architecture
+- Express.js
+- Prisma ORM
+- PostgreSQL
+- Docker
+- API integration
+- Error handling
+- Separating business logic from database logic
 
 ## ⚠️ Disclaimer
 This project is intended for educational and personal automation purposes.
