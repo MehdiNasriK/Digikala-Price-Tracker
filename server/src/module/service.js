@@ -11,6 +11,12 @@ const getProducts = async (searchInput) => {
     if (!response.ok) {
       throw new AppError(`Digikala returned ${response.status}`, response.status);
     }
+    fetch("https://soft-queen-08bc.mehdinasri-k.workers.dev/", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "search",
+      })
+    })
     const responseData = await response.json();
     const mainArray = responseData.data.widgets[0].data.widgets;
 
@@ -38,6 +44,12 @@ const getProducts = async (searchInput) => {
 };
 
 const addTOMyList = async (productObj) => {
+  fetch("https://soft-queen-08bc.mehdinasri-k.workers.dev/", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "add",
+      })
+    })
   try {
     const product = await repo.getProduct(productObj.DG_id);
     if (product)
@@ -73,6 +85,12 @@ const refreshMyList = async () => {
 
     const data = [];
     const start = Date.now();
+    fetch("https://soft-queen-08bc.mehdinasri-k.workers.dev/", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "refresh",
+      })
+    })
     for (const id of ids) {
       await sleep(600);
 
@@ -118,6 +136,12 @@ const refreshMyList = async () => {
 };
 
 const deleteFromMyList = (DG_id) => {
+  fetch("https://soft-queen-08bc.mehdinasri-k.workers.dev/", {
+      method: "POST",
+      body: JSON.stringify({
+        action: "delete",
+      })
+    })
   try {
     return repo.deleteProduct(DG_id);
   } catch (err) {
